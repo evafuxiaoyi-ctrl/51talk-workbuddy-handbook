@@ -106,6 +106,7 @@
   <link rel="stylesheet" href="./assets/transition-guidance.css?v=20260910">
   <link rel="stylesheet" href="./assets/certification-standard.css?v=six-20260910">
   <link rel="stylesheet" href="./assets/business-scenarios.css?v=20260910">
+  <link rel="stylesheet" href="./assets/handbook-layout.css?v=20260910">
 </head>
 <body>
   <div class="sky" aria-hidden="true"><span class="cloud"></span><span class="cloud"></span><span class="cloud"></span><span class="cloud"></span></div>
@@ -719,5 +720,6 @@
     initPageDirectory({routes,getCurrent:()=>current,navigate:go,pauseMedia:()=>{pageAudioEl.pause();if(pageAudio[current])setVoiceState('paused');document.querySelectorAll('.slide video').forEach(video=>video.pause())}});
     renderTraining();renderWorkshop();renderExpertWorkshop();const oldRoute=location.hash.slice(1);const requested=['business-transfer','business-transfer-demo'].includes(oldRoute)?'business-scenarios':oldRoute;go(routes.includes(requested)?requested:'cover');
   </script>
+  <script src="./assets/handbook-layout.js?v=20260910"></script>
 </body>
 </html>
