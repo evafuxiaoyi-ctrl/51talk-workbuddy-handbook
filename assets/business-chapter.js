@@ -13,7 +13,7 @@ const businessSlides = [
       <li class="journey-stop"><span class="stop-num">02</span><div><h3>装备工坊</h3><p>准备连接器、知识、Skill 与自动化。</p></div></li>
       <li class="journey-stop"><span class="stop-num">03</span><div><small>上一站</small><h3>AI 专家召唤工坊</h3><p>配置角色与边界，完成四类测试。</p></div></li>
       <li class="journey-stop current" aria-current="step"><span class="stop-num">04</span><div><small>你在这里 · 即将进入</small><h3>业务任务训练场</h3><p>先看完整示范，再用同材料练习，最后换场景迁移。</p></div></li>
-      <li class="journey-stop future"><span class="stop-num">05</span><div><h3>品质安全守护堡</h3><p>下一关：系统核验质量与安全，尚未开放。</p></div></li>
+      <li class="journey-stop future"><span class="stop-num">05</span><div><h3>品质安全守护堡</h3><p>下一关：系统核验质量与安全，修订并留下证据。</p></div></li>
     </ol></div>
     <div class="business-note"><b>带上什么：</b>前面跑通的任务卡、已测试 Skill、知识与专家。换成新业务时，要检查适用范围，不能直接沿用周报口径。</div>
     <p class="business-journey-next">向右翻页，开始第四关 →</p>`],
@@ -71,7 +71,7 @@ const businessSlides = [
     <p class="business-note">自检只记录你已检查过哪些内容，不代表平台替你验收了真实工作。</p>`],
   ['business-quiz','训练场 · 10 测 / 方法验收','换一个场景，你还会判断吗？','四道选择题，至少答对三道通过知识验收；不锁导航。',`
     <div class="quiz-shell" id="business-quiz-shell"></div>
-    <div class="business-note">测验检查方法判断；真实应用仍要看你自己的任务卡、产物和核验记录。下一关“品质安全守护堡”尚未开放。</div>`]
+    <div class="business-note">测验检查方法判断；真实应用仍要看你自己的任务卡、产物和核验记录。下一关“品质安全守护堡”继续检查这份产物。</div><div class="business-actions"><button class="pixel-btn" data-route="journey-safety">进入最后一关 →</button></div>`]
 ];
 businessSlides.sort((a,b)=>businessRoutes.indexOf(a[0])-businessRoutes.indexOf(b[0]));
 document.querySelector('.book main').insertAdjacentHTML('beforeend', businessSlides.map(([id,level,title,subtitle,body]) => `<section class="slide business-slide" id="${id}"><span class="level">${level}</span><h1 class="title">${title}</h1><p class="subtitle">${subtitle}</p><div class="business-content" tabindex="0" role="region" aria-label="${title}，内容可滚动">${body}</div><button class="business-scroll-cue" type="button" hidden>向下滚动，查看剩余内容 ↓</button></section>`).join(''));

@@ -1,0 +1,4 @@
+/* Reuse the handbook cards and scrollable lesson layout. */
+.safety-draft{margin:8px 0;padding:14px 16px;border-left:5px solid var(--coral);border-radius:10px;background:#fff0ed;color:var(--navy);font-size:14px;line-height:1.9}
+.safety-findings{display:grid;gap:10px}.safety-findings .business-answer{margin:0}.safety-findings summary{min-height:36px;padding:5px 0}.safety-findings p{margin:7px 0}
+.safety-slide .business-table td:first-child{width:30%}
