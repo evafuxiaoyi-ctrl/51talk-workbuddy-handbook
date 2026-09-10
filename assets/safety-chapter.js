@@ -1,5 +1,5 @@
 /* Final gate: inspect the existing deliverable, repair it, and retain evidence. */
-const safetyRoutes=['journey-safety','safety-challenge','safety-facts','safety-permission','safety-injection','safety-repair','safety-incident','safety-practice','safety-quiz','handbook-finish'];
+const safetyRoutes=['journey-safety','safety-challenge','safety-facts','safety-permission','safety-injection','safety-repair','safety-incident','safety-practice','safety-quiz','handbook-finish','handbook-closing'];
 const safetySlides=[
   ['journey-safety','升级地图 · 进入第五关','最后一站，品质安全守护堡','第四关做出岗位产物；这一关判断它是否可以交付。',`
     <div class="journey-map"><ol class="journey-stops" aria-label="当前学习路线">
@@ -53,7 +53,17 @@ const safetySlides=[
     <div class="business-card" id="safety-learning-status"></div>
     <div class="business-note"><b>你真正带走的：</b>一个与岗位有关、能重复使用的任务方案，一份实际产物，以及一条可以回看验证过程的记录。</div>
     <div class="business-actions"><button class="pixel-btn" data-route="safety-practice">回看我的终检任务</button><button class="secondary" data-page-directory>展开章节目录</button></div>
-    <p class="business-note warning">浏览到最后一页不代表所有任务都已完成。本手册不是正式证书，也未自动检查外部系统中的业务结果。</p>`]
+    <p class="business-note warning">浏览完手册不代表所有任务都已完成。本手册不是正式证书，也未自动检查外部系统中的业务结果。</p>`],
+  ['handbook-closing','AI DRIVER · 把能力带回工作','祝大家考试顺利！','愿你带着信心走进考场，也带着方法回到工作。',`
+    <div class="closing-message">
+      <img class="closing-mike" src="./assets/mascot/mike-cheer.png" alt="Mike 为你加油">
+      <p class="closing-lead">培训和考试不是结束</p>
+      <p class="closing-core">只有在真实工作中<strong>高频使用</strong>，<br>才能真正掌握。</p>
+      <div class="closing-habit">多用一次 · 多核验一次 · 多改进一点</div>
+    </div>
+    <p class="closing-note">从下一项真实任务开始，<br>让 AI 成为你日常工作的一部分。</p>
+    <div class="closing-actions"><a class="pixel-btn" href="workbuddy://">回 WorkBuddy，开始实践 →</a><button class="secondary" data-route="business-scenarios">回看六大场景方法</button></div>`]
+
 ];
 document.querySelector('.book main').insertAdjacentHTML('beforeend',safetySlides.map(([id,level,title,subtitle,body])=>`<section class="slide business-slide safety-slide" id="${id}"><span class="level">${level}</span><h1 class="title">${title}</h1><p class="subtitle">${subtitle}</p><div class="business-content" tabindex="0" role="region" aria-label="${title}，内容可滚动">${body}</div><button class="business-scroll-cue" type="button" hidden>向下滚动，查看剩余内容 ↓</button></section>`).join(''));
 document.querySelectorAll('.safety-slide .business-content').forEach(area=>{businessResizeObserver.observe(area);[...area.children].forEach(child=>businessResizeObserver.observe(child));area.addEventListener('scroll',updateBusinessScrollCues,{passive:true});area.addEventListener('toggle',updateBusinessScrollCues,true);area.nextElementSibling.onclick=()=>area.scrollBy({top:area.clientHeight*.75,behavior:'smooth'})});

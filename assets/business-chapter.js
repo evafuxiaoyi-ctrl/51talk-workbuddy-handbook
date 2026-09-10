@@ -1,11 +1,10 @@
 /* Loaded before the handbook controller so its existing navigation and task cards are reused. */
-const businessRoutes = ['journey-business','business-overview','business-demo','business-source','business-sample','business-batch','business-output','business-delivery','business-transfer-demo','business-transfer','business-solo','business-quiz'];
+const businessRoutes = ['journey-business','business-overview','business-demo','business-source','business-sample','business-batch','business-output','business-delivery','business-scenarios','business-solo','business-quiz'];
 const businessSampleUrl = './assets/practice/business-report-practice.zip';
 const businessMainVideoUrl = './assets/videos/workbuddy-full-demo-20260909.mp4';
 const businessCard = (title, body, kicker='') => `<article class="business-card">${kicker?`<span class="business-kicker">${kicker}</span>`:''}<h2>${title}</h2>${body}</article>`;
 const businessPrompt = text => `<div class="business-prompt">${text}</div>`;
 const businessAction = (id, text) => `<div class="business-actions"><button class="pixel-btn" data-quest="${id}">${text}</button></div>`;
-const businessVideo = (name, title, caption) => `<figure class="business-video" data-video-slot="${name}"><div class="business-video-frame"><span>实操视频 · 待录制</span><h2>${title}</h2><p>此处为视频占位，暂不可播放<br>可先查看后续练习指引</p></div><figcaption>${caption}</figcaption></figure>`;
 const businessSlides = [
   ['journey-business','升级地图 · 进入第四关','下一站，业务任务训练场','前三关准备能力，这一关把能力用到自己的工作里。',`
     <div class="journey-map"><ol class="journey-stops" aria-label="当前学习路线">
@@ -20,7 +19,7 @@ const businessSlides = [
   ['business-overview','LEVEL 04 · 学习路线','先看我做，再轮到你','看完整示范 → 用同材料练习 → 换场景迁移。',`
     ${businessCard('看我做：先看一遍完整过程','<p>先看老师如何把原始材料变成汇报交付：怎样交代任务、何时检查样例、如何纠偏、怎样确认发送。</p><p><b>这一阶段：</b>看清流程和关键判断，不急着跟着操作。</p>','01 WATCH')}
     ${businessCard('你来练：用同一套材料跑一遍','<p>下载示范使用的虚构材料，按后面的分步指引自己操作，从读取材料做到文件交付。</p><p><b>这一阶段：</b>先独立尝试，遇到问题再回看示范；保留产物与核验记录。</p>','02 PRACTICE')}
-    ${businessCard('做迁移：换入口，再换成自己的岗位','<p>先看听记转行动的迁移示范，再用迁移卡练习，最后选择一项自己的工作，替换材料、规则、结果和确认点。</p><p><b>这一阶段：</b>不照搬案例，学会举一反三。最后用选择题验收方法。</p>','03 TRANSFER')}
+    ${businessCard('做迁移：换入口，再换成自己的岗位','<p>对照六大场景的方法拆解，选择一项自己的工作，替换材料、规则、结果和确认点。</p><p><b>这一阶段：</b>不照搬案例，学会举一反三。最后用选择题验收方法。</p>','03 TRANSFER')}
     <div class="business-note"><b>本关核心：</b>不要只说“帮我做好”。要会分阶段交代、看中间结果、指出具体问题。</div>
     <div class="business-note warning">现有周报专家若只允许生成草稿，不要绕过它直接发送。先明确新任务的角色与边界；交付使用经授权的入口，必要时由本人手动完成。</div>`],
   ['business-source','训练场 · 02 你来练 / 材料','先让它说清：读到了什么','轮到你了：用示范中的同一套材料，自己跑一遍。',`
@@ -54,22 +53,14 @@ const businessSlides = [
     <div class="business-actions"><a class="secondary" href="${businessMainVideoUrl}" download>下载完整实操视频（约 30 MB）</a></div>
     ${businessCard('看老师做时，留意三个判断','<ol><li><b>为什么先列材料：</b>老师怎样确认读取范围与数量？</li><li><b>为什么先做样例：</b>老师怎样判断重复和缺失，怎样给出具体反馈？</li><li><b>为什么发送前停一下：</b>老师怎样核对对象、正文、附件和真实发送记录？</li></ol><p>先完整看一遍，再进入同材料练习；遇到问题可返回这里暂停、拖动进度或全屏回看。</p>')}
     <div class="business-actions"><button class="pixel-btn" data-route="business-source">进入同材料练习 →</button></div>`],
-  ['business-transfer','训练场 · 08 做迁移 / 练习','把会议讨论，变成可确认的行动','参照迁移示范，换成一份获准使用的听记，自己试一次。',`
-    ${businessCard('哪些不变，哪些要换',`<table class="business-table"><thead><tr><th>环节</th><th>主线</th><th>听记迁移</th></tr></thead><tbody><tr><td>输入范围</td><td>指定本地文件</td><td>指定日期、会议与授权听记</td></tr><tr><td>处理规则</td><td>去重、核验成果</td><td>区分讨论、决定与承诺</td></tr><tr><td>输出结果</td><td>明细、汇报文件</td><td>行动清单、待确认问题</td></tr><tr><td>外部动作</td><td>发送文件</td><td>创建待办或发送摘要</td></tr></tbody></table>`)}
-    ${businessPrompt('<strong>你可以这样说 · 先读取，再做行动样例</strong>\n请通过当前已授权的听记能力，读取我指定会议的摘要与可访问逐字稿，先列出实际来源。\n区分“讨论建议、已作决定、明确行动”，为行动保留原文或时间位置。先做两条样例；负责人、日期不明确时列待确认，不自行指派。先不要创建待办或发消息。')}
-    <div class="business-note warning">只有摘要时，要标明证据范围，不声称核对过完整逐字稿。权限不足或接口不可用时，可手动提供获准的记录继续练；不能冒充 MCP 读取成功。</div>
-    ${businessAction(14,'打开听记迁移练习卡')}`],
-  ['business-transfer-demo','训练场 · 07 做迁移 / 示范','换个场景，看方法如何迁移','同材料练习之后，再看老师把听记变成会后行动。',`
-    ${businessVideo('business-minutes','迁移实操：听记 → 行动清单','录制内容：定位指定听记 → 读取原文 → 区分讨论与决定 → 补确认项 → 核准后创建待办或发送摘要 → 回读结果。')}
-    ${businessCard('先用这段虚构会议记录判断','<p>“小林说：我会在本周五 17:00 前提交名单。”</p><p>“是否发到全员群，下次再讨论。”</p><p>“后续培训要有人跟进，具体人选和时间还没定。”</p><details class="business-answer"><summary>哪些能成为行动？展开对照</summary><p>第一条是明确承诺，但还需核对小林的真实账号和会议日期对应的截止日。第二条不是群发授权；第三条应进入待确认清单，不能擅自指定负责人。</p></details>')}
-    <div class="business-actions"><button class="pixel-btn" data-route="business-transfer">进入听记迁移练习 →</button></div>`],
-  ['business-solo','训练场 · 09 做迁移 / 岗位','带走一个你下周就能用的场景','看过、练过，再把材料、规则和交付换成你自己的工作。',`
+  ['business-scenarios','训练场 · 07 做迁移 / 方法','六大场景，拆开看怎么做','材料会换，方法相通：明确输入 → 先看样例 → 完成产物 → 核验结果。', businessScenarioContent],
+  ['business-solo','训练场 · 08 做迁移 / 岗位','带走一个你下周就能用的场景','看过、练过，再把材料、规则和交付换成你自己的工作。',`
     ${businessCard('先换四个变量',`<table class="business-table"><thead><tr><th>要换什么</th><th>写成你自己的答案</th></tr></thead><tbody><tr><td>材料</td><td>哪份表、哪个文件夹、哪次会议？</td></tr><tr><td>规则</td><td>按什么分类、统计、判断或提取？</td></tr><tr><td>结果</td><td>谁来用？需要什么文件或行动清单？</td></tr><tr><td>确认点</td><td>何时看样例？哪些发送或写入必须确认？</td></tr></tbody></table>`)}
     ${businessCard('选场景的灵感，不是固定作业','<p><b>HR：</b>入职培训记录 → 完成情况表 → 缺项跟进清单。</p><p><b>运营：</b>活动数据 → 按统一口径汇总 → 复盘文档。</p><p><b>项目协作：</b>项目会议 → 决策与行动 → 核准后的待办。</p><p>选一个材料可获得、规则说得清、结果有人用的小任务即可。</p>')}
     <div class="business-note"><b>交三样：</b>自己的任务卡＋实际打开检查过的产物＋一条纠偏或验证记录。没有遇到错误，就记录一次抽查，不编造纠错经历。</div>
     ${businessAction(15,'打开我的岗位任务卡')}
     <p class="business-note">自检只记录你已检查过哪些内容，不代表平台替你验收了真实工作。</p>`],
-  ['business-quiz','训练场 · 10 测 / 方法验收','换一个场景，你还会判断吗？','四道选择题，至少答对三道通过知识验收；不锁导航。',`
+  ['business-quiz','训练场 · 09 测 / 方法验收','换一个场景，你还会判断吗？','四道选择题，至少答对三道通过知识验收；不锁导航。',`
     <div class="quiz-shell" id="business-quiz-shell"></div>
     <div class="business-note">测验检查方法判断；真实应用仍要看你自己的任务卡、产物和核验记录。下一关“品质安全守护堡”继续检查这份产物。</div><div class="business-actions"><button class="pixel-btn" data-route="journey-safety">进入最后一关 →</button></div>`]
 ];
@@ -128,34 +119,6 @@ const businessQuests = [
 
 【最后保存】
 材料清单、明细与汇报、一次纠偏或抽查记录，以及草稿/已发送/失败等真实交付状态。`,checks:['实际读取了指定材料，并保留原文件；没有遍历无关目录','样例已经确认；去重、缺失状态与人次口径均抽查过','明细和汇报文件真实可打开，数据一致，异常与来源保留','保留了至少一次具体纠偏或抽查记录','交付状态如实记录；若发送，已有明确授权和发送记录；未发送则标为草稿']},
-  {id:14,title:'迁移练习：听记到会后行动',time:'20–25 分钟',level:'★★☆',output:'行动清单 + 待确认项 + 真实执行状态',where:'WorkBuddy 中检查钉钉听记相关连接器/MCP 的授权和可用入口 → 指定一场获准使用的会议。无法读取时，手动提供获准记录，或用卡内虚构片段练习；明确区分两种输入方式。',template:`【先确定范围】
-会议：[确切会议名称/ID或链接]
-会议日期与时区：[实际日期，Asia/Shanghai 或实际时区]
-输入方式：[已授权听记能力 / 手动提供的记录 / 下方虚构练习片段]
-工作目标：生成可核验的会后行动清单，不把讨论建议变成执行承诺。
-
-【第一轮：列来源】
-只读取上述范围。列出实际可访问的摘要、逐字稿及定位信息；只有摘要时明确标注，不声称读了全部原文。
-权限不足、能力不可用或找不到会议时停止读取并说明缺口，不扩大范围。
-
-【第二轮：两个样例】
-区分讨论建议、已作决定和明确行动，先处理两条样例供我检查。
-行动项包含：事项、负责人、截止日期、原文依据或时间位置、待确认问题。
-相对日期结合会议日期转换；负责人账号需确认。缺少信息不猜，来源冲突并列。
-
-【虚构片段，可在无听记权限时使用】
-小林说：“我会在本周五 17:00 前提交名单。”
-主持人说：“是否发到全员群，下次再讨论。”
-主持人说：“后续培训要有人跟进，具体人选和时间还没定。”
-这段没有提供实际会议日期和人员账号；必须待确认，不可创建真实任务。
-
-【第三轮：确认后整理完整清单】
-应用确认的规则，输出明确行动与待确认事项两个列表，保留证据。不自动发送或创建待办。
-
-【第四轮：确认外部动作】
-先列拟执行清单：选择创建待办或发送摘要，写清账号、日期、内容与范围，等我逐项核准并明确要求执行。
-未经确认不执行，不因会议提到一个人就自动指派。能力不支持时，保留草稿供本人手动处理。
-执行后回读实际记录；状态不明先查询，不重复创建。记录真实结果，不把创建成功当成任务完成。`,checks:['输入方式和证据范围已明确，未把手动材料冒充 MCP 读取','讨论、决定和行动分开，并保留原文依据','缺少的日期、负责人账号与任务内容已列待确认，没有自行补写','样例已检查；外部动作先确认，未执行的部分保持草稿状态','保留了清单与真实执行状态，未把待办创建当成业务完成']},
   {id:15,title:'自主练习：我的岗位应用任务',time:'25–40 分钟',level:'★★★',output:'岗位任务卡 + 实际产物 + 纠偏/验证记录',where:'在 WorkBuddy 中选择适合这项任务的专家或新建任务 → 引用获准材料 → 填写下方四个变量。先检查既有 Skill/知识是否适合，不沿用不相关的周报或培训口径。',template:`【我的工作场景】
 我从事：[岗位]
 我希望减少的一项重复工作：[具体工作]
@@ -186,7 +149,7 @@ D. 若涉及外部动作，附真实交付状态；不要求为了交作业而�
 const businessQuizData = [
   {question:'销售同事给你 30 份同结构记录，统计规则还没跑过。最合适的下一句是？',options:['全部统计完再统一看看。','先列材料，再选代表性样例按规则处理，确认后批量。','先生成 HTML，让负责人判断是否满意。'],answer:1,explanation:'先检查输入、用样例验证规则，再批量扩展。换了岗位，这个顺序仍适用。',route:'business-sample'},
   {question:'同一结果要做成 Excel 和 Word。哪种做法能减少口径漂移？',options:['两份文件分别从原材料独立统计，不用对照。','为了汇报简洁，删去所有待确认项。','从同一份核验明细生成，再打开两份文件核对数字、口径与异常。'],answer:2,explanation:'格式可以变，但事实、统计范围和异常不能随表达形式改变。',route:'business-output'},
-  {question:'听记只有“这个问题最好有人跟进”，没说负责人和期限。应该怎么处理？',options:['列为待确认事项，附原文，询问负责人和期限。','给发言人建一个明天到期的待办。','直接忽略，因为不是完整任务。'],answer:0,explanation:'既不能把建议补成承诺，也不该丢掉潜在行动。保留依据，明确待确认，再决定是否执行。',route:'business-transfer'},
+  {question:'听记只有“这个问题最好有人跟进”，没说负责人和期限。应该怎么处理？',options:['列为待确认事项，附原文，询问负责人和期限。','给发言人建一个明天到期的待办。','直接忽略，因为不是完整任务。'],answer:0,explanation:'既不能把建议补成承诺，也不该丢掉潜在行动。保留依据，明确待确认，再决定是否执行。',route:'business-scenarios'},
   {question:'发送附件后连接超时，Agent 没拿到结果。下一步应该是？',options:['立刻再发一次，保证对方收到。','先查真实发送记录；仍不明确则报告状态未知，避免重复发送。','文件已生成，就记录交付完成。'],answer:1,explanation:'调用超时不等于发送失败。先回读真实状态，必要时请人确认；发送也不代表业务已完成。',route:'business-delivery'}
 ];
 const businessQuizKey='51talk-ai-driver-handbook-v1-business-quiz';
@@ -200,7 +163,7 @@ function renderBusinessQuiz(){
     localStorage.setItem(businessQuizKey,String(businessQuizBest));
     const passed=businessQuizScore>=3;
     const review=[...new Set(businessQuizWrong.map(i=>businessQuizData[i].route))];
-    shell.innerHTML=`<div class="quiz-result"><strong>${businessQuizScore} / 4</strong><h3>${passed?'业务任务训练场 · 知识验收通过':'再练一次，把判断补扎实'}</h3><p>历史最高 ${businessQuizBest} / 4。${passed?'你已掌握样例确认、格式一致与行动边界。接下来检查自己的岗位产物。':'按下方入口回看错题涉及的方法，再重新作答。'}</p><button class="pixel-btn" id="business-quiz-retry">重新测一次</button><div class="business-review-links">${review.map(route=>`<button class="secondary" data-business-review="${route}">回看${route==='business-sample'?'样例':route==='business-output'?'文件':route==='business-transfer'?'听记':'交付'}方法</button>`).join('')}<button class="secondary" data-business-review="business-solo">查看岗位作业</button><button class="secondary" data-business-review="map">回到升级地图</button></div></div>`;
+    shell.innerHTML=`<div class="quiz-result"><strong>${businessQuizScore} / 4</strong><h3>${passed?'业务任务训练场 · 知识验收通过':'再练一次，把判断补扎实'}</h3><p>历史最高 ${businessQuizBest} / 4。${passed?'你已掌握样例确认、格式一致与行动边界。接下来检查自己的岗位产物。':'按下方入口回看错题涉及的方法，再重新作答。'}</p><button class="pixel-btn" id="business-quiz-retry">重新测一次</button><div class="business-review-links">${review.map(route=>`<button class="secondary" data-business-review="${route}">回看${route==='business-sample'?'样例':route==='business-output'?'文件':route==='business-scenarios'?'六场景':'交付'}方法</button>`).join('')}<button class="secondary" data-business-review="business-solo">查看岗位作业</button><button class="secondary" data-business-review="map">回到升级地图</button></div></div>`;
     document.getElementById('business-quiz-retry').onclick=()=>{businessQuizIndex=0;businessQuizScore=0;businessQuizAnswered=false;businessQuizWrong=[];renderBusinessQuiz()};
     shell.querySelectorAll('[data-business-review]').forEach(b=>b.onclick=()=>go(b.dataset.businessReview));
     return;

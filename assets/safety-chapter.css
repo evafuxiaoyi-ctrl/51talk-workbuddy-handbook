@@ -2,3 +2,21 @@
 .safety-draft{margin:8px 0;padding:14px 16px;border-left:5px solid var(--coral);border-radius:10px;background:#fff0ed;color:var(--navy);font-size:14px;line-height:1.9}
 .safety-findings{display:grid;gap:10px}.safety-findings .business-answer{margin:0}.safety-findings summary{min-height:36px;padding:5px 0}.safety-findings p{margin:7px 0}
 .safety-slide .business-table td:first-child{width:30%}
+
+/* Warm final encouragement, distinct from the learning-record recap. */
+#handbook-closing{padding-top:92px}
+#handbook-closing>.level{align-self:center}
+#handbook-closing>.title{text-align:center;font-size:34px;margin:14px 0 8px}
+#handbook-closing>.subtitle{text-align:center;font-size:13px;line-height:1.6}
+#handbook-closing .business-content{text-align:center;margin-top:12px}
+.closing-message{background:#fffce5;border:3px solid var(--navy);border-radius:22px;padding:12px 12px 14px;box-shadow:4px 5px var(--blue2)}
+.closing-mike{display:block;height:85px;width:85px;object-fit:contain;margin:0 auto 10px}
+.closing-lead{font-size:21px;font-weight:800;color:var(--navy);margin:8px 0}
+.closing-core{font-size:19px;line-height:1.7;color:var(--navy);margin:8px 0 16px}
+.closing-core strong{color:var(--blue);background:var(--yellow);padding:1px 4px;margin:0 3px;border-radius:4px}
+.closing-habit{font-size:12px;font-weight:700;color:var(--blue2);border-top:1px solid #e4d793;padding-top:13px}
+.closing-note{font-size:14px;line-height:1.7;color:var(--navy);margin:14px 0 10px}
+.closing-actions{display:flex;flex-direction:column;align-items:stretch;gap:10px;margin:0 4px}
+#handbook-closing .closing-actions .pixel-btn{font-size:14px;background:var(--blue);color:white}
+#handbook-closing .closing-actions .secondary{background:transparent;box-shadow:none;border-color:transparent;color:var(--blue2);min-height:28px;padding:3px 8px}
+@media(max-width:820px){#handbook-closing>.title{font-size:30px}.closing-mike{height:80px;width:80px}.closing-core{font-size:17px}.closing-lead{font-size:19px}}

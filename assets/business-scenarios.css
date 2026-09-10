@@ -1,0 +1,6 @@
+.scenario-method{background:white;border:2px solid var(--navy);border-radius:14px;margin:0 0 12px;overflow:hidden;box-shadow:3px 4px var(--blue2)}
+.scenario-method summary{display:flex;align-items:center;gap:10px;padding:14px;cursor:pointer;list-style:none;color:var(--navy)}
+.scenario-method summary::-webkit-details-marker{display:none}.scenario-method summary>span{background:var(--yellow);padding:5px 8px;border-radius:7px;font:800 12px NunitoPixel}.scenario-method summary strong{font-size:16px}.scenario-method summary small{margin-left:auto;font-size:10px;color:var(--blue)}
+.scenario-method[open] summary{background:#eaf1ff;border-bottom:1px solid #bdd2f2}.scenario-method-body{padding:14px}
+.scenario-method dl{display:grid;grid-template-columns:65px 1fr;gap:8px;margin:0 0 14px;font-size:12px;line-height:1.6}.scenario-method dt{font-weight:700;color:var(--blue2)}.scenario-method dd{margin:0;color:#344054}
+.scenario-method label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.scenario-method textarea{display:block;width:100%;resize:vertical;border:1px solid #b7ceeb;border-radius:10px;background:#fffce5;padding:10px;font:12px/1.7 TalkCN,sans-serif;color:var(--navy);margin-bottom:10px}.scenario-method textarea:focus-visible{outline:3px solid var(--blue)}.scenario-copy-status{display:block;font-size:11px;color:#087b4b;margin-top:7px}

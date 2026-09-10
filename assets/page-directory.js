@@ -5,7 +5,7 @@ function initPageDirectory({routes,getCurrent,navigate,pauseMedia}) {
   const list=dialog.querySelector('#directory-list');
   const count=dialog.querySelector('#directory-count');
   const jump=dialog.querySelector('#directory-page-number');
-  const openingTitles={cover:'封面',preface:'Mike 的开篇寄语'};
+  const openingTitles={cover:'封面',preface:'Mike 的开篇寄语','driver-standard':'Level 1 AI Driver · 能力要求'};
   const groups=[['toc','快速上手'],['village','新手启航村'],['journey-workshop','装备工坊'],['journey-expert','AI 专家召唤工坊'],['journey-business','业务任务训练场'],['journey-safety','品质安全守护堡']];
   const clean=text=>(text||'').replace(/\s+/g,' ').trim();
   const entries=routes.map((route,index)=>{
@@ -19,7 +19,7 @@ function initPageDirectory({routes,getCurrent,navigate,pauseMedia}) {
   function render(){
     const query=search.value.trim().toLowerCase();
     const filtered=entries.filter(item=>!query||item.content.includes(query)||item.title.toLowerCase().includes(query)||item.chapter.toLowerCase().includes(query)||String(item.page)===query.replace(/^p\s*/,''));
-    count.textContent=query?`找到 ${filtered.length} 页 · 已展开匹配章节`:`2 个开篇入口 · ${groups.length} 个章节 · ${entries.length} 页`;
+    count.textContent=query?`找到 ${filtered.length} 页 · 已展开匹配章节`:`${entries.filter(item=>item.group==='opening').length} 个开篇入口 · ${groups.length} 个章节 · ${entries.length} 页`;
     list.replaceChildren();
     filtered.filter(item=>item.group==='opening').forEach(item=>{
       const li=document.createElement('li'),link=document.createElement('a'),number=document.createElement('span'),body=document.createElement('span'),title=document.createElement('strong'),meta=document.createElement('small'),arrow=document.createElement('span');
