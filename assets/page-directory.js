@@ -5,21 +5,32 @@ function initPageDirectory({routes,getCurrent,navigate,pauseMedia}) {
   const list=dialog.querySelector('#directory-list');
   const count=dialog.querySelector('#directory-count');
   const jump=dialog.querySelector('#directory-page-number');
-  const groups=[['cover','快速上手'],['village','新手启航村'],['journey-workshop','装备工坊'],['journey-expert','AI 专家召唤工坊'],['journey-business','业务任务训练场'],['journey-safety','品质安全守护堡']];
+  const openingTitles={cover:'封面',preface:'Mike 的开篇寄语'};
+  const groups=[['toc','快速上手'],['village','新手启航村'],['journey-workshop','装备工坊'],['journey-expert','AI 专家召唤工坊'],['journey-business','业务任务训练场'],['journey-safety','品质安全守护堡']];
   const clean=text=>(text||'').replace(/\s+/g,' ').trim();
   const entries=routes.map((route,index)=>{
     const slide=document.getElementById(route);
     const group=groups.filter(([start])=>index>=routes.indexOf(start)).at(-1);
-    return {route,page:index+1,group:group[0],chapter:group[1],title:clean(slide.querySelector('h1')?.textContent)||clean(slide.querySelector('h2')?.textContent)||route,stage:clean(slide.querySelector('.level')?.textContent),content:clean(slide.textContent).toLowerCase()};
+    return {route,page:index+1,group:group?.[0]||'opening',chapter:group?.[1]||'开篇',title:openingTitles[route]||clean(slide.querySelector('h1')?.textContent)||clean(slide.querySelector('h2')?.textContent)||route,stage:clean(slide.querySelector('.level')?.textContent),content:clean(slide.textContent).toLowerCase()};
   });
   jump.max=String(entries.length);
   jump.setAttribute('aria-label',`跳到页码，1 至 ${entries.length}`);
   const expanded=new Set();
   function render(){
     const query=search.value.trim().toLowerCase();
-    const filtered=entries.filter(item=>!query||item.content.includes(query)||item.chapter.toLowerCase().includes(query)||String(item.page)===query.replace(/^p\s*/,''));
-    count.textContent=query?`找到 ${filtered.length} 页 · 已展开匹配章节`:`${groups.length} 个章节 · ${entries.length} 页 · 点击章节展开`;
+    const filtered=entries.filter(item=>!query||item.content.includes(query)||item.title.toLowerCase().includes(query)||item.chapter.toLowerCase().includes(query)||String(item.page)===query.replace(/^p\s*/,''));
+    count.textContent=query?`找到 ${filtered.length} 页 · 已展开匹配章节`:`2 个开篇入口 · ${groups.length} 个章节 · ${entries.length} 页`;
     list.replaceChildren();
+    filtered.filter(item=>item.group==='opening').forEach(item=>{
+      const li=document.createElement('li'),link=document.createElement('a'),number=document.createElement('span'),body=document.createElement('span'),title=document.createElement('strong'),meta=document.createElement('small'),arrow=document.createElement('span');
+      link.href='#'+item.route;link.className='directory-item directory-opening';
+      number.className='directory-number';number.textContent='P'+item.page;
+      title.textContent=item.title;meta.textContent='点击直接进入';
+      if(item.route===getCurrent()){link.setAttribute('aria-current','page');meta.textContent+=' · 当前页'}
+      arrow.className='directory-chevron';arrow.setAttribute('aria-hidden','true');arrow.textContent='→';
+      body.append(title,meta);link.append(number,body,arrow);li.append(link);list.append(li);
+      link.addEventListener('click',event=>{event.preventDefault();visit(item.route)});
+    });
     groups.forEach(([key,label],index)=>{
       const matches=filtered.filter(item=>item.group===key);
       if(!matches.length)return;
