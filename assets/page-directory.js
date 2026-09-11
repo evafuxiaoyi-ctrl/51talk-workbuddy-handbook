@@ -11,7 +11,7 @@ function initPageDirectory({routes,getCurrent,navigate,pauseMedia}) {
   const entries=routes.map((route,index)=>{
     const slide=document.getElementById(route);
     const group=groups.filter(([start])=>index>=routes.indexOf(start)).at(-1);
-    return {route,page:index+1,group:group?.[0]||'opening',chapter:group?.[1]||'开篇',title:openingTitles[route]||clean(slide.querySelector('h1')?.textContent)||clean(slide.querySelector('h2')?.textContent)||route,stage:clean(slide.querySelector('.level')?.textContent),content:clean(slide.textContent).toLowerCase()};
+    return {route,page:index+1,group:group?.[0]||'opening',chapter:group?.[1]||'开篇',title:openingTitles[route]||clean(slide.querySelector('h1')?.textContent)||clean(slide.querySelector('h2')?.textContent)||route,stage:clean(slide.querySelector('.level')?.textContent),sections:[...slide.querySelectorAll('[data-directory-entry][id]')].map(section=>({id:section.id,title:section.dataset.directoryEntry})),content:clean(slide.textContent).toLowerCase()};
   });
   jump.max=String(entries.length);
   jump.setAttribute('aria-label',`跳到页码，1 至 ${entries.length}`);
@@ -50,6 +50,14 @@ function initPageDirectory({routes,getCurrent,navigate,pauseMedia}) {
       if(item.route===getCurrent()){link.setAttribute('aria-current','page');meta.textContent+=' · 当前页'}
       body.append(title,meta);link.append(number,body);li.append(link);children.append(li);
       link.addEventListener('click',event=>{event.preventDefault();visit(item.route)});
+      item.sections.forEach(section=>{
+        const shortcut=document.createElement('a');
+        shortcut.className='directory-section-link';
+        shortcut.href='?focus='+encodeURIComponent(section.id)+'#'+item.route;
+        shortcut.textContent='↳ '+section.title+' →';
+        shortcut.addEventListener('click',event=>{event.preventDefault();visit(item.route,section.id)});
+        li.append(shortcut);
+      });
       });
       details.append(summary,children);groupItem.append(details);list.append(groupItem);
       details.addEventListener('toggle',()=>{if(!query){if(details.open)expanded.add(key);else expanded.delete(key)}});
@@ -57,7 +65,7 @@ function initPageDirectory({routes,getCurrent,navigate,pauseMedia}) {
     if(!filtered.length){const empty=document.createElement('li');empty.className='directory-empty';empty.textContent='没有找到匹配页面，试试其他关键词或清空搜索。';list.append(empty)}
     list.parentElement.scrollTop=0;
   }
-  function visit(route){dialog.close();navigate(route);const title=document.getElementById(route).querySelector('h1,h2');if(title){title.setAttribute('tabindex','-1');title.focus({preventScroll:true})}}
+  function visit(route,sectionId){dialog.close();navigate(route);if(sectionId){const section=document.getElementById(sectionId);if(section&&section.closest('.slide').id===route){const url=new URL(location.href);url.searchParams.set('focus',sectionId);history.replaceState(null,'',url);requestAnimationFrame(()=>{section.scrollIntoView({block:'start'});section.focus({preventScroll:true})});return}}const title=document.getElementById(route).querySelector('h1,h2');if(title){title.setAttribute('tabindex','-1');title.focus({preventScroll:true})}}
   function open(){
     search.value='';jump.value='';expanded.clear();
     const here=entries.find(item=>item.route===getCurrent());
